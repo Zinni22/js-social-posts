@@ -104,13 +104,13 @@ posts.forEach((post, index) => {
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
+                <a class="like-button  js-like-button" data-postid=${post.id}>
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
             </div>
             <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
+                Piace a <b id=${post.id} class="js-likes-counter">${post.likes}</b> persone
             </div>
         </div> 
     </div>            
@@ -125,12 +125,37 @@ Milestone 3 - Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del
 Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like.
 */
 
-const likeButton = document.querySelectorAll('.likes__cta');
-console.log('Il pulsante di like è', likeButton);
+const allLikeButton = document.querySelectorAll('.js-like-button');
+console.log('Tutti i pulsanti di like', allLikeButton);
 
-likeButton.addEventListener('click',
-    function() {
+
+const likedPosts = [];
+
+allLikeButton.forEach((singleLike, i) => {
+
+    singleLike.addEventListener('click',
+        function(){
+
+            console.log('Ho cliccato sul like', singleLike);
+            singleLike.classList.add('like-button--liked');
+
+            let likeCounter = document.querySelectorAll('.js-likes-counter');
+            console.log(likeCounter[i]);
+
+            let incrementLike = parseInt(likeCounter[i].innerText);
+            console.log(incrementLike);
+            let newIncrementLike = incrementLike + 1;
+            console.log(newIncrementLike)
+
+            likeCounter[i].innerHTML = newIncrementLike;
+
+            likedPosts.push(likeCounter[i]);
+
+            console.log('elenco post a cui ho messo like', likedPosts)
+          
+            }
         
-    }
+        
+    )
 
-);
+});
